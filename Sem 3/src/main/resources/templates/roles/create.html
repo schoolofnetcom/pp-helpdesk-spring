@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html
+	xmlns:th="http://thymeleaf.org/"
+	xmlns:layout="http://ultraq.net.nz/thymeleaf/layout/"
+	layout:decorator="layout">
+
+	<th:block layout:fragment="content">
+		<div class="col-xs-12 col-md-12 text-center">
+			<h4>Create new Role</h4>
+			
+			<form action="" th:action="@{/roles/}" th:object="${role}" th:method="post">
+				<div class="form-group">
+					<input type="text" th:field="*{name}" name="name" placeholder="Enter role name:" class="form-control" />
+					<span class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Role name error</span>
+				</div>	
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary">Save</button>
+				</div>
+			</form>
+		</div>
+	</th:block>
+</html>
