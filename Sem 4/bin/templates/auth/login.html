@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html
+	xmlns:th="http://thymeleaf.org/"
+	xmlns:layout="http://ultraq.net.nz/thymeleaf/layout/"
+	layout:decorator="layout">
+
+	<th:block layout:fragment="content">
+		<div class="col-xs-12 col-md-12 text-center">
+			<h4>Login user</h4>
+			<form action="" th:action="@{/login}" th:method="post">
+				<div class="form-group">
+					<input type="email" id="email" name="email" placeholder="Enter user email:" class="form-control" />
+				</div>	
+				<div class="form-group">
+					<input type="password" id="password" name="password" placeholder="Enter user password:" class="form-control" />
+				</div>				
+				<div class="text-center" th:if="${param.errors}">
+					<span class="text-danger">
+						Email or password invalid. Try again.
+					</span>
+				</div>
+				<div class="form-group">
+					<a href="/registration">New? Create account</a>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary">Login</button>
+				</div>
+			</form>
+		</div>
+	</th:block>
+</html>
