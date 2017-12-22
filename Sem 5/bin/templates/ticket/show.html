@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html
+	xmlns:th="http://thymeleaf.org/"
+	xmlns:layout="http://ultraq.net.nz/thymeleaf/layout/"
+	layout:decorator="layout">
+
+	<th:block layout:fragment="content">
+		<div class="col-xs-12 col-md-12">			
+			<div class="card">
+				<div class="card-header">
+					Ticket - <span th:text="${ticket.name}"></span>
+				</div>
+				<div class="card-block">
+					<ul>
+						<li>
+							Name: 
+							<span th:text="${ticket.name}"></span>
+						</li>
+						<li>
+							Description: 
+							<span th:text="${ticket.description}"></span>
+						</li>
+						<li>
+							Finished: 
+							<div class="inline" th:switch="${ticket.finished}">
+								<span th:case="${true}" class="badge badge-success" th:text="${ticket.finished}"></span>
+								<span th:case="${false}" class="badge badge-danger" th:text="${ticket.finished}"></span>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>	
+			<form action="" th:action="@{/tickets/}" th:object="${ticket}" th:method="post">
+			</form>
+			
+			<a href="/tickets" class="btn btn-secondary">Back</a>
+		</div>
+	</th:block>
+</html>
