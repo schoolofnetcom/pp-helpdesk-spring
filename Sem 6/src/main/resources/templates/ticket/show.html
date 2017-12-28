@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html
+	xmlns:th="http://thymeleaf.org/"
+	xmlns:layout="http://ultraq.net.nz/thymeleaf/layout/"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	layout:decorator="layout">
+
+	<th:block layout:fragment="content">
+		<div class="col-xs-12 col-md-12">			
+			<div class="card">
+				<div class="card-header">
+					Ticket - <span th:text="${ticket.name}"></span>
+				</div>
+				<div class="card-block">
+					<ul>
+						<li>
+							Name: 
+							<span th:text="${ticket.name}"></span>
+						</li>
+						<li>
+							Description: 
+							<span th:text="${ticket.description}"></span>
+						</li>
+						<li>
+							Finished: 
+							<div class="inline" th:switch="${ticket.finished}">
+								<span th:case="${true}" class="badge badge-success" th:text="${ticket.finished}"></span>
+								<span th:case="${false}" class="badge badge-danger" th:text="${ticket.finished}"></span>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>	
+			<a href="/tickets" class="btn btn-secondary">Back</a>
+		</div>
+		<div class="col-xs-12 col-md-12">				
+			<hr />
+			<h2>New Interaction</h2>	
+			<form action="" th:action="@{/tickets/{ticketId}/interactions(ticketId = ${ticket.id})}" th:object="${interaction}" th:method="post">
+				<div class="form-group">
+					<input type="text" disabled="disabled" class="form-control" th:value="${#authentication.name}" />
+				</div>
+				<div class="form-group">
+					<textarea class="form-control" th:field="*{text}" placeholder="Enter text interaction"></textarea>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-success">Save</button>
+				</div>
+			</form>		
+		</div> 
+		<div class="col-xs-12 col-md-12">
+			<hr />
+			<h2>List Interactions</h2>
+			<hr />
+		</div>
+		<div class="col-xs-12 col-md-12" th:each="interact : ${interactions}">
+			<div class="col-xs-10 col-md-10">
+				<strong th:text="${interact.userInteraction.email} + ' comments:'"></strong>
+				<p th:text="${interact.text}"></p>
+			</div>
+			<div class="col-xs-2 col-md-2" th:switch="${userLoggedIn.roles[0].name}">
+				<form th:case="ADMIN" action="" th:action="@{/tickets/{ticketId}/interactions/{id}(ticketId = ${ticket.id}, id = ${interact.id})}" th:method="delete">
+					<button type="submit" class="btn btn-danger">Delete</button>
+				</form>
+				<form th:case="USER" th:if="${userLoggedIn.id == ticket.userOpen.id}" action="" th:action="@{/tickets/{ticketId}/interactions/{id}(ticketId = ${ticket.id}, id = ${interact.id})}" th:method="delete">
+					<button type="submit" class="btn btn-danger">Delete</button>
+				</form>
+			</div>
+		</div>
+	</th:block>
+</html>

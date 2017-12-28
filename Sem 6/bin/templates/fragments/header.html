@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html
+	xmlns:th="http://thymeleaf.org/"
+	xmlns:layout="http://ultraq.net.nz/thymeleaf/layout/"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+	<nav class="navbar navbar-toggleable-md navbar-inverse bg-primary">
+		<button type="button" class="navbar-toggler navbar-toggler-right" data-toggle="collapse" data-target="navbar">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<a href="/" class="navbar-brand">Helpdesk</a>
+		
+		<div class="collapse navbar-collapse" id="navbar">
+			<ul class="navbar-nav mr-auto" sec:authorize="isAuthenticated()">
+				<li class="nav-item">
+					<a href="/users" class="nav-link" sec:authorize="hasAuthority('ADMIN')">Users</a>
+				</li>
+				<li class="nav-item">
+					<a href="/roles" class="nav-link" sec:authorize="hasAuthority('ADMIN')">Roles</a>
+				</li>
+				<li class="nav-item">
+					<a href="/tickets" class="nav-link">Tickets</a>
+				</li>
+				<li class="nav-item">
+					<a href="/reports/tickets" class="nav-link" sec:authorize="hasAuthority('ADMIN')">Report Ticket Html</a>
+				</li>
+				<li class="nav-item">
+					<a href="/reports/tickets/pdfgen" class="nav-link" sec:authorize="hasAuthority('ADMIN')">Report Ticket PDF</a>
+				</li>
+			</ul>
+			<ul class="navbar-nav ml-auto" sec:authorize="isAuthenticated()">
+				<li class="nav-item">
+					<a href="/logout" class="nav-link">Logout</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+</html>
